@@ -98,6 +98,7 @@ class _NewPieceViewState extends State<NewPieceView> {
                                     children: [
                                       ColorPicker(
                                         pickerColor: selectedColor,
+                                        hexInputController: controller,
                                         onColorChanged: (value) {
                                           setState(() => selectedColor = value);
                                         },
@@ -187,6 +188,7 @@ class _NewPieceViewState extends State<NewPieceView> {
           color: selectedColor,
           hoverColor: selectedColor,
           onPressed: () async {
+            // todo ②new_world_viewの確定ボタン後、db追加、UI更新
             Navigator.pop(context);
           },
         ),

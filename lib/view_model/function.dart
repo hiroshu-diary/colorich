@@ -64,6 +64,22 @@ class Scl {
       curve: curve,
     );
   }
+
+  //最新Viewへ移動
+  void oneTapTitle(scrollController) {
+    scrollToBottom(scrollController, sclToBmDur, sclToBmCur);
+  }
+
+  //最古Viewへ移動
+  void longTapTitle(scrollController) {
+    scrollToTop(scrollController, sclToHdDur, sclToHdCur);
+  }
+
+  //新規作成後
+  void afterNewPiece(scrollController) {
+    scrollToTop(scrollController, toRe, newCur);
+    scrollToBottom(scrollController, newDur, newCur);
+  }
 }
 
 //SettingsViewのメソッド

@@ -66,16 +66,8 @@ class _LaughTailViewState extends State<LaughTailView>
         title: Padding(
           padding: const EdgeInsets.only(left: 5),
           child: GestureDetector(
-            onTap: () => scl.scrollToBottom(
-              scrollController,
-              scl.sclToBmDur,
-              scl.sclToBmCur,
-            ),
-            onLongPress: () => scl.scrollToTop(
-              scrollController,
-              scl.sclToHdDur,
-              scl.sclToHdCur,
-            ),
+            onTap: () => scl.oneTapTitle(scrollController),
+            onLongPress: () => scl.longTapTitle(scrollController),
             child: const Text('ColoRich', style: TextStyle(fontSize: 33)),
           ),
         ),
@@ -108,8 +100,7 @@ class _LaughTailViewState extends State<LaughTailView>
             },
           );
           //上行の一瞬スクロールは、Riverpodを使わず、Rebuildが難しくなった時用。
-          scl.scrollToTop(scrollController, scl.toRe, scl.newCur);
-          scl.scrollToBottom(scrollController, scl.newDur, scl.newCur);
+          scl.afterNewPiece(scrollController);
         },
         onLongPress: () {},
         shape: const CircleBorder(),
@@ -133,6 +124,9 @@ class _LaughTailViewState extends State<LaughTailView>
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 4.0),
+        // todo ①ラフテルのcolorListを表示できるようにする
+        // todo ③各カードをロングタップ時にDraggableにし、下中央で削除できるようんする。
+        // todo ④カードタップ時に、インスタみたいなアニメで編集画面へ遷移、色と言葉だけ変更可能に。
         child: GridView.builder(
           controller: scrollController,
           itemCount: laughTailColors.length,
