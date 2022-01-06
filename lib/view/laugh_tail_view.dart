@@ -22,7 +22,7 @@ class _LaughTailViewState extends State<LaughTailView>
   final Color rrr = const Color(0xffff99ff);
   final Color ggg = const Color.fromRGBO(255, 100, 255, 1);
   final double connectCircle = 27.0;
-  final double sidePadding = 3.9;
+  final double sidePadding = 0;
   List<OnePiece> timeLine = [];
 
   ScrollController scrollController = ScrollController();
@@ -99,7 +99,7 @@ class _LaughTailViewState extends State<LaughTailView>
             topRadius: const Radius.circular(25),
             context: context,
             builder: (context) {
-              return NewPieceView(timeLine: []);
+              return const NewPieceView(timeLine: []);
             },
           );
           reBuild();
@@ -139,71 +139,65 @@ class _LaughTailViewState extends State<LaughTailView>
                   crossAxisCount: 3,
                 ),
                 itemBuilder: (context, index) {
-                  final deviceWidth = MediaQuery.of(context).size.width;
                   return GestureDetector(
                     onTap: () {},
                     child: Stack(
                       children: <Widget>[
                         //ほぼ正方形
-                        Container(
-                          margin: const EdgeInsets.all(0.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                            color: Color.fromRGBO(
-                              timeLine[index].oneRed,
-                              timeLine[index].oneGreen,
-                              timeLine[index].oneBlue,
-                              1.0,
+                        SimpleShadow(
+                          offset: const Offset(-2, -2),
+                          sigma: 3,
+                          color: oneColor(index),
+                          child: Container(
+                            margin: const EdgeInsets.all(0.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25.0),
+                              color: oneColor(index),
                             ),
                           ),
                         ),
                         //左右コネクト
                         Positioned(
                           left: -2,
+
+                          ///final double sidePadding = MediaQuery.of(context).size.width;
+                          ///↑Scaffoldを返す前に設定。
                           top: (deviceWidth - sidePadding * 2) / 6,
                           width: connectCircle,
                           height: connectCircle,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: index % 3 != 0
-                                  ? Color.fromRGBO(
-                                      timeLine[index - 1].oneRed,
-                                      timeLine[index - 1].oneGreen,
-                                      timeLine[index - 1].oneBlue,
-                                      1.0,
-                                    )
-                                  : Color.fromRGBO(
-                                      timeLine[index].oneRed,
-                                      timeLine[index].oneGreen,
-                                      timeLine[index].oneBlue,
-                                      1.0,
-                                    ),
+                          child: SimpleShadow(
+                            sigma: 3,
+                            color: oneColor(index),
+                            offset: const Offset(-3, 0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: index % 3 != 0
+                                    ? oneColor(index - 1)
+                                    : const Color.fromRGBO(0, 0, 0, 0),
+                              ),
                             ),
                           ),
                         ),
                         //上下コネクト
                         Positioned(
                           top: -2,
+
+                          ///上のPositionedと同じく真ん中に起きたいです。
                           left: (deviceWidth - sidePadding * 2) / 6,
                           width: connectCircle,
                           height: connectCircle,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: index > 2
-                                  ? Color.fromRGBO(
-                                      timeLine[index - 3].oneRed,
-                                      timeLine[index - 3].oneGreen,
-                                      timeLine[index - 3].oneBlue,
-                                      1.0,
-                                    )
-                                  : Color.fromRGBO(
-                                      timeLine[index].oneRed,
-                                      timeLine[index].oneGreen,
-                                      timeLine[index].oneBlue,
-                                      1.0,
-                                    ),
+                          child: SimpleShadow(
+                            sigma: 3,
+                            color: oneColor(index),
+                            offset: const Offset(0, -3),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: index > 2
+                                    ? oneColor(index - 3)
+                                    : const Color.fromRGBO(0, 0, 0, 0),
+                              ),
                             ),
                           ),
                         ),
@@ -216,6 +210,15 @@ class _LaughTailViewState extends State<LaughTailView>
           ),
         ],
       ),
+    );
+  }
+
+  Color oneColor(int index) {
+    return Color.fromRGBO(
+      timeLine[index].oneRed,
+      timeLine[index].oneGreen,
+      timeLine[index].oneBlue,
+      1.0,
     );
   }
 }
