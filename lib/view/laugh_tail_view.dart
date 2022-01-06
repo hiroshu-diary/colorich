@@ -7,7 +7,6 @@ import 'package:colorich/view_model/function.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:simple_shadow/simple_shadow.dart';
-import 'list.dart';
 import 'new_world_view.dart';
 
 class LaughTailView extends StatefulWidget {
