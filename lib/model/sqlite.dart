@@ -9,7 +9,9 @@ class DbProvider {
   static Future<void> _createTable(Database db, int version) async {
     //AUTOINCREMENTを使うことで、idを自動で追加する
     await db.execute(
-      'CREATE TABLE $tableName(oneId INTEGER PRIMARY KEY AUTOINCREMENT, oneRed INTEGER, oneGreen INTEGER, oneBlue INTEGER, oneTime TEXT, oneStory TEXT)',
+      'CREATE TABLE $tableName(oneId INTEGER PRIMARY KEY AUTOINCREMENT,'
+      ' oneRed INTEGER, oneGreen INTEGER, oneBlue INTEGER, oneTime TEXT,'
+      ' oneStory TEXT)',
     );
   }
 
@@ -45,9 +47,9 @@ class DbProvider {
     if (maps.isEmpty) {
       return [];
     } else {
-      List<OnePiece> onePieceList = List.generate(maps.length, (index) {
+      List<OnePiece> timeLine = List.generate(maps.length, (index) {
         return OnePiece(
-          maps[index]['id'],
+          maps[index]['oneId'],
           maps[index]['oneRed'],
           maps[index]['oneGreen'],
           maps[index]['oneBlue'],
@@ -55,7 +57,7 @@ class DbProvider {
           maps[index]['oneStory'],
         );
       });
-      return onePieceList;
+      return timeLine;
     }
   }
 
@@ -71,7 +73,7 @@ class DbProvider {
         'oneStory': onePiece.oneStory,
       },
       //被りがないののはidだから使用
-      where: 'id = ?',
+      where: 'oneId = ?',
       whereArgs: [onePiece.oneTime],
       //alarm.idとidが一致した時に上記のようにアップデートする
     );

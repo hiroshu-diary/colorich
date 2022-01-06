@@ -1,5 +1,6 @@
 import 'package:colorich/dice/d_model.dart';
 import 'package:colorich/model/one_piece.dart';
+import 'package:colorich/model/sqlite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -23,6 +24,8 @@ class _NewPieceViewState extends State<NewPieceView> {
   final double cardSideLength = window.physicalSize.width * 0.14;
   final Dice dice = Dice();
   final controller = TextEditingController();
+  late OnePiece onePiece;
+
   void initAddColor() {
     if (widget.index != null) {
       setState(() {});
@@ -189,6 +192,16 @@ class _NewPieceViewState extends State<NewPieceView> {
           hoverColor: selectedColor,
           onPressed: () async {
             // todo ②new_world_viewの確定ボタン後、db追加、UI更新
+            onePiece = OnePiece(
+              widget.timeLine.length,
+              selectedColor.red,
+              selectedColor.green,
+              selectedColor.blue,
+              DateTime.now(),
+              controller.text,
+            );
+            await DbProvider.create(onePiece);
+            //  await DbProvider.setDb();
             Navigator.pop(context);
           },
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-List<Widget> laughTailColors = [
+List<Widget> practiceL = [
   const Card(color: Colors.redAccent, elevation: 4),
   const Card(color: Colors.greenAccent, elevation: 4),
   const Card(color: Colors.blueAccent, elevation: 4),

@@ -19,10 +19,10 @@ class LaughTailView extends StatefulWidget {
 
 class _LaughTailViewState extends State<LaughTailView>
     with AfterLayoutMixin<LaughTailView> {
-  List<OnePiece> timeLine = [];
   final scl = Scl();
   final Color rrr = const Color(0xffff99ff);
   final Color ggg = const Color.fromRGBO(255, 100, 255, 1);
+  List<OnePiece> timeLine = [];
 
   ScrollController scrollController = ScrollController();
 
@@ -45,9 +45,9 @@ class _LaughTailViewState extends State<LaughTailView>
 
   @override
   void initState() {
-    scrollController = ScrollController();
     super.initState();
     initDb();
+    scrollController = ScrollController();
   }
 
   @override
@@ -99,6 +99,7 @@ class _LaughTailViewState extends State<LaughTailView>
               return NewPieceView(timeLine: []);
             },
           );
+          reBuild();
           //上行の一瞬スクロールは、Riverpodを使わず、Rebuildが難しくなった時用。
           scl.afterNewPiece(scrollController);
         },
@@ -122,21 +123,87 @@ class _LaughTailViewState extends State<LaughTailView>
         color: Colors.white,
         child: SizedBox(height: 40),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 4.0),
-        // todo ①ラフテルのcolorListを表示できるようにする
-        // todo ③各カードをロングタップ時にDraggableにし、下中央で削除できるようんする。
-        // todo ④カードタップ時に、インスタみたいなアニメで編集画面へ遷移、色と言葉だけ変更可能に。
-        child: GridView.builder(
-          controller: scrollController,
-          itemCount: laughTailColors.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
+      body: Column(
+        children: [
+          const Divider(color: Colors.white, height: 3.9),
+          Flexible(
+            child: GridView.builder(
+              controller: scrollController,
+              itemCount: timeLine.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+              ),
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {},
+                  child: Stack(
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.center,
+                        child: Card(
+                          elevation: 10.0,
+                          margin: const EdgeInsets.all(0.0),
+                          color: Color.fromRGBO(
+                            timeLine[index].oneRed,
+                            timeLine[index].oneGreen,
+                            timeLine[index].oneBlue,
+                            1.0,
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          width: 21,
+                          height: 21,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: index % 3 != 0
+                                ? Color.fromRGBO(
+                                    timeLine[index - 1].oneRed,
+                                    timeLine[index - 1].oneGreen,
+                                    timeLine[index - 1].oneBlue,
+                                    1.0,
+                                  )
+                                : Color.fromRGBO(
+                                    timeLine[index].oneRed,
+                                    timeLine[index].oneGreen,
+                                    timeLine[index].oneBlue,
+                                    1.0,
+                                  ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: Container(
+                          width: 21,
+                          height: 21,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: index > 2
+                                ? Color.fromRGBO(
+                                    timeLine[index - 3].oneRed,
+                                    timeLine[index - 3].oneGreen,
+                                    timeLine[index - 3].oneBlue,
+                                    1.0,
+                                  )
+                                : Color.fromRGBO(
+                                    timeLine[index].oneRed,
+                                    timeLine[index].oneGreen,
+                                    timeLine[index].oneBlue,
+                                    1.0,
+                                  ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
-          itemBuilder: (BuildContext context, int index) {
-            return laughTailColors[index];
-          },
-        ),
+        ],
       ),
     );
   }
