@@ -1,4 +1,5 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:colorich/dice/d_model.dart';
 import 'package:colorich/dice/d_view.dart';
 import 'package:colorich/model/one_piece.dart';
 import 'package:colorich/model/sqlite.dart';
@@ -22,7 +23,8 @@ class _LaughTailViewState extends State<LaughTailView>
   final Color rrr = const Color(0xffff99ff);
   final Color ggg = const Color.fromRGBO(255, 100, 255, 1);
   final double connectCircle = 27.0;
-  final double sidePadding = 0;
+  final double sidePadding = 3.9;
+  final Dice dice = Dice();
   List<OnePiece> timeLine = [];
 
   ScrollController scrollController = ScrollController();
@@ -91,6 +93,12 @@ class _LaughTailViewState extends State<LaughTailView>
         ],
         elevation: 0.0,
       ),
+      backgroundColor: Color.fromARGB(
+        255,
+        dice.hexRGB[dice.ranHR],
+        dice.hexRGB[dice.ranHG],
+        dice.hexRGB[dice.ranHB],
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: MaterialButton(
         onPressed: () async {
@@ -158,11 +166,12 @@ class _LaughTailViewState extends State<LaughTailView>
                         ),
                         //左右コネクト
                         Positioned(
-                          left: -2,
+                          left: -3,
 
                           ///final double sidePadding = MediaQuery.of(context).size.width;
                           ///↑Scaffoldを返す前に設定。
-                          top: (deviceWidth - sidePadding * 2) / 6,
+                          top: (deviceWidth - sidePadding * 2) / 6 -
+                              connectCircle / 2,
                           width: connectCircle,
                           height: connectCircle,
                           child: SimpleShadow(
@@ -181,10 +190,11 @@ class _LaughTailViewState extends State<LaughTailView>
                         ),
                         //上下コネクト
                         Positioned(
-                          top: -2,
+                          top: -3,
 
                           ///上のPositionedと同じく真ん中に起きたいです。
-                          left: (deviceWidth - sidePadding * 2) / 6,
+                          left: (deviceWidth - sidePadding * 2) / 6 -
+                              connectCircle / 2,
                           width: connectCircle,
                           height: connectCircle,
                           child: SimpleShadow(
