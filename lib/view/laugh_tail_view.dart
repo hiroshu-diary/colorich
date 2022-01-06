@@ -22,6 +22,8 @@ class _LaughTailViewState extends State<LaughTailView>
   final scl = Scl();
   final Color rrr = const Color(0xffff99ff);
   final Color ggg = const Color.fromRGBO(255, 100, 255, 1);
+  final double connectCircle = 27.0;
+  final double sidePadding = 3.9;
   List<OnePiece> timeLine = [];
 
   ScrollController scrollController = ScrollController();
@@ -58,6 +60,7 @@ class _LaughTailViewState extends State<LaughTailView>
 
   @override
   Widget build(BuildContext context) {
+    final deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -87,6 +90,7 @@ class _LaughTailViewState extends State<LaughTailView>
             ),
           )
         ],
+        elevation: 0.0,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: MaterialButton(
@@ -127,80 +131,88 @@ class _LaughTailViewState extends State<LaughTailView>
         children: [
           const Divider(color: Colors.white, height: 3.9),
           Flexible(
-            child: GridView.builder(
-              controller: scrollController,
-              itemCount: timeLine.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-              ),
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {},
-                  child: Stack(
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment.center,
-                        child: Card(
-                          elevation: 10.0,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: sidePadding),
+              child: GridView.builder(
+                controller: scrollController,
+                itemCount: timeLine.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                ),
+                itemBuilder: (context, index) {
+                  final deviceWidth = MediaQuery.of(context).size.width;
+                  return GestureDetector(
+                    onTap: () {},
+                    child: Stack(
+                      children: <Widget>[
+                        //ほぼ正方形
+                        Container(
                           margin: const EdgeInsets.all(0.0),
-                          color: Color.fromRGBO(
-                            timeLine[index].oneRed,
-                            timeLine[index].oneGreen,
-                            timeLine[index].oneBlue,
-                            1.0,
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          width: 21,
-                          height: 21,
                           decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: index % 3 != 0
-                                ? Color.fromRGBO(
-                                    timeLine[index - 1].oneRed,
-                                    timeLine[index - 1].oneGreen,
-                                    timeLine[index - 1].oneBlue,
-                                    1.0,
-                                  )
-                                : Color.fromRGBO(
-                                    timeLine[index].oneRed,
-                                    timeLine[index].oneGreen,
-                                    timeLine[index].oneBlue,
-                                    1.0,
-                                  ),
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: Color.fromRGBO(
+                              timeLine[index].oneRed,
+                              timeLine[index].oneGreen,
+                              timeLine[index].oneBlue,
+                              1.0,
+                            ),
                           ),
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          width: 21,
-                          height: 21,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: index > 2
-                                ? Color.fromRGBO(
-                                    timeLine[index - 3].oneRed,
-                                    timeLine[index - 3].oneGreen,
-                                    timeLine[index - 3].oneBlue,
-                                    1.0,
-                                  )
-                                : Color.fromRGBO(
-                                    timeLine[index].oneRed,
-                                    timeLine[index].oneGreen,
-                                    timeLine[index].oneBlue,
-                                    1.0,
-                                  ),
+                        //左右コネクト
+                        Positioned(
+                          left: -2,
+                          top: (deviceWidth - sidePadding * 2) / 6,
+                          width: connectCircle,
+                          height: connectCircle,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: index % 3 != 0
+                                  ? Color.fromRGBO(
+                                      timeLine[index - 1].oneRed,
+                                      timeLine[index - 1].oneGreen,
+                                      timeLine[index - 1].oneBlue,
+                                      1.0,
+                                    )
+                                  : Color.fromRGBO(
+                                      timeLine[index].oneRed,
+                                      timeLine[index].oneGreen,
+                                      timeLine[index].oneBlue,
+                                      1.0,
+                                    ),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
+                        //上下コネクト
+                        Positioned(
+                          top: -2,
+                          left: (deviceWidth - sidePadding * 2) / 6,
+                          width: connectCircle,
+                          height: connectCircle,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: index > 2
+                                  ? Color.fromRGBO(
+                                      timeLine[index - 3].oneRed,
+                                      timeLine[index - 3].oneGreen,
+                                      timeLine[index - 3].oneBlue,
+                                      1.0,
+                                    )
+                                  : Color.fromRGBO(
+                                      timeLine[index].oneRed,
+                                      timeLine[index].oneGreen,
+                                      timeLine[index].oneBlue,
+                                      1.0,
+                                    ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ],
