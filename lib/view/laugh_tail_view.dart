@@ -5,6 +5,7 @@ import 'package:colorich/model/one_piece.dart';
 import 'package:colorich/model/sqlite.dart';
 import 'package:colorich/view/settings_view.dart';
 import 'package:colorich/view_model/function.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:simple_shadow/simple_shadow.dart';
@@ -136,10 +137,12 @@ class _LaughTailViewState extends State<LaughTailView>
       ),
       body: Column(
         children: [
-          const Divider(color: Colors.white, height: 3.9),
           Flexible(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: sidePadding),
+              padding: EdgeInsets.symmetric(
+                horizontal: sidePadding,
+                vertical: 3.0,
+              ),
               child: GridView.builder(
                 controller: scrollController,
                 itemCount: timeLine.length,
@@ -149,17 +152,48 @@ class _LaughTailViewState extends State<LaughTailView>
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {},
+                    //CupertinoDialogで削除ポップ
+                    onLongPress: () {
+                      setState(() {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              var thisPiece = timeLine[index];
+                              return CupertinoAlertDialog(
+                                content: const Text(
+                                  '本当に削除してもいいですか？',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                actions: [
+                                  CupertinoDialogAction(
+                                    child: const Text('はい'),
+                                    onPressed: () async {
+                                      await DbProvider.delete(thisPiece.oneId);
+                                      Navigator.pop(context);
+                                      reBuild();
+                                    },
+                                  ),
+                                  CupertinoDialogAction(
+                                    child: const Text('いいえ'),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  )
+                                ],
+                              );
+                            });
+                      });
+                    },
                     child: Stack(
                       children: <Widget>[
                         //ほぼ正方形
                         SimpleShadow(
                           offset: const Offset(-2, -2),
                           sigma: 3,
-                          color: oneColor(index),
                           child: Container(
                             margin: const EdgeInsets.all(0.0),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25.0),
+                              borderRadius: BorderRadius.circular(21.0),
                               color: oneColor(index),
                             ),
                           ),
@@ -167,9 +201,6 @@ class _LaughTailViewState extends State<LaughTailView>
                         //左右コネクト
                         Positioned(
                           left: -3,
-
-                          ///final double sidePadding = MediaQuery.of(context).size.width;
-                          ///↑Scaffoldを返す前に設定。
                           top: (deviceWidth - sidePadding * 2) / 6 -
                               connectCircle / 2,
                           width: connectCircle,
@@ -191,8 +222,6 @@ class _LaughTailViewState extends State<LaughTailView>
                         //上下コネクト
                         Positioned(
                           top: -3,
-
-                          ///上のPositionedと同じく真ん中に起きたいです。
                           left: (deviceWidth - sidePadding * 2) / 6 -
                               connectCircle / 2,
                           width: connectCircle,

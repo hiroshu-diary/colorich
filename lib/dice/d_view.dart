@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:colorich/view/laugh_tail_view.dart';
 import 'package:colorich/view_model/function.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -141,22 +142,22 @@ class _ColoDiceState extends State<ColoDice> {
                     '${dice.copiedHEX[dice.ranHR]}${dice.copiedHEX[dice.ranHG]}${dice.copiedHEX[dice.ranHB]}');
 
             Clipboard.setData(data);
-            // showDialog(
-            //   context: context,
-            //   builder: (context) {
-            //     return CupertinoAlertDialog(
-            //       title: const Text("Copy completed！"),
-            //       content: Text(
-            //           "#${dice.copiedHEX[dice.ranHR]}${dice.copiedHEX[dice.ranHG]}${dice.copiedHEX[dice.ranHB]}"),
-            //       actions: <Widget>[
-            //         CupertinoDialogAction(
-            //           child: const Text("OK"),
-            //           onPressed: () => Navigator.pop(context),
-            //         ),
-            //       ],
-            //     );
-            //   },
-            // );
+            showDialog(
+              context: context,
+              builder: (context) {
+                return CupertinoAlertDialog(
+                  title: const Text("Copy completed！"),
+                  content: Text(
+                      "#${dice.copiedHEX[dice.ranHR]}${dice.copiedHEX[dice.ranHG]}${dice.copiedHEX[dice.ranHB]}"),
+                  actions: <Widget>[
+                    CupertinoDialogAction(
+                      child: const Text("OK"),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                );
+              },
+            );
           });
         },
         child: const Text(
