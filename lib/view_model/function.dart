@@ -86,9 +86,8 @@ class Scl {
 class SetHelper {
   final mailAddress = 'hiroshu.diary@mail.com';
   final urlApp = Platform.isIOS
-      ? 'https://apps.apple.com/jp/app/minimaru/id1577885243'
+      ? 'https://apps.apple.com/us/developer/hiroshi-tsunezumi/id1577885245'
       : '';
-  final urlIns = 'https://www.instagram.com/hiroshu_diary';
 
   //URLを後で変える
   void dumpNotify() {
@@ -168,10 +167,6 @@ class SetHelper {
 
   Future<void> launchAppStore() async {
     _launchURL(urlApp);
-  }
-
-  Future<void> launchInsta() async {
-    _launchURL(urlIns);
   }
 }
 

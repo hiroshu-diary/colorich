@@ -4,12 +4,14 @@ import 'package:colorich/dice/d_view.dart';
 import 'package:colorich/model/one_piece.dart';
 import 'package:colorich/model/sqlite.dart';
 import 'package:colorich/view/settings_view.dart';
+import 'package:colorich/view/upd_piece_view.dart';
 import 'package:colorich/view_model/function.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 import 'new_world_view.dart';
+import 'package:animations/animations.dart' as ani;
 
 class LaughTailView extends StatefulWidget {
   const LaughTailView({Key? key}) : super(key: key);
@@ -94,12 +96,14 @@ class _LaughTailViewState extends State<LaughTailView>
         ],
         elevation: 0.0,
       ),
-      backgroundColor: Color.fromARGB(
-        255,
-        dice.hexRGB[dice.ranHR],
-        dice.hexRGB[dice.ranHG],
-        dice.hexRGB[dice.ranHB],
-      ),
+      backgroundColor: styleValue == false
+          ? Color.fromARGB(
+              255,
+              dice.hexRGB[dice.ranHR],
+              dice.hexRGB[dice.ranHG],
+              dice.hexRGB[dice.ranHB],
+            )
+          : Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: MaterialButton(
         onPressed: () async {
@@ -151,14 +155,23 @@ class _LaughTailViewState extends State<LaughTailView>
                 ),
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      OnePiece thisPiece = timeLine[index];
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return UpdatePieceView(
+                          thisPiece: thisPiece,
+                        );
+                      }));
+                    },
+
                     //CupertinoDialogで削除ポップ
                     onLongPress: () {
                       setState(() {
                         showDialog(
                             context: context,
                             builder: (context) {
-                              var thisPiece = timeLine[index];
+                              OnePiece thisPiece = timeLine[index];
                               return CupertinoAlertDialog(
                                 content: const Text(
                                   '本当に削除してもいいですか？',
@@ -184,64 +197,69 @@ class _LaughTailViewState extends State<LaughTailView>
                             });
                       });
                     },
-                    child: Stack(
-                      children: <Widget>[
-                        //ほぼ正方形
-                        SimpleShadow(
-                          offset: const Offset(-2, -2),
-                          sigma: 3,
-                          child: Container(
-                            margin: const EdgeInsets.all(0.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(21.0),
-                              color: oneColor(index),
-                            ),
-                          ),
-                        ),
-                        //左右コネクト
-                        Positioned(
-                          left: -3,
-                          top: (deviceWidth - sidePadding * 2) / 6 -
-                              connectCircle / 2,
-                          width: connectCircle,
-                          height: connectCircle,
-                          child: SimpleShadow(
-                            sigma: 3,
-                            color: oneColor(index),
-                            offset: const Offset(-3, 0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: index % 3 != 0
-                                    ? oneColor(index - 1)
-                                    : const Color.fromRGBO(0, 0, 0, 0),
+                    child: styleValue == false
+                        ? Stack(
+                            children: <Widget>[
+                              //ほぼ正方形
+                              SimpleShadow(
+                                offset: const Offset(-2, -2),
+                                sigma: 3,
+                                child: Container(
+                                  margin: const EdgeInsets.all(0.0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(21.0),
+                                    color: oneColor(index),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-                        //上下コネクト
-                        Positioned(
-                          top: -3,
-                          left: (deviceWidth - sidePadding * 2) / 6 -
-                              connectCircle / 2,
-                          width: connectCircle,
-                          height: connectCircle,
-                          child: SimpleShadow(
-                            sigma: 3,
-                            color: oneColor(index),
-                            offset: const Offset(0, -3),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: index > 2
-                                    ? oneColor(index - 3)
-                                    : const Color.fromRGBO(0, 0, 0, 0),
+                              //左右コネクト
+                              Positioned(
+                                left: -3,
+                                top: (deviceWidth - sidePadding * 2) / 6 -
+                                    connectCircle / 2,
+                                width: connectCircle,
+                                height: connectCircle,
+                                child: SimpleShadow(
+                                  sigma: 3,
+                                  color: oneColor(index),
+                                  offset: const Offset(-3, 0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: index % 3 != 0
+                                          ? oneColor(index - 1)
+                                          : const Color.fromRGBO(0, 0, 0, 0),
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
+                              //上下コネクト
+                              Positioned(
+                                top: -3,
+                                left: (deviceWidth - sidePadding * 2) / 6 -
+                                    connectCircle / 2,
+                                width: connectCircle,
+                                height: connectCircle,
+                                child: SimpleShadow(
+                                  sigma: 3,
+                                  color: oneColor(index),
+                                  offset: const Offset(0, -3),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: index > 2
+                                          ? oneColor(index - 3)
+                                          : const Color.fromRGBO(0, 0, 0, 0),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Card(
+                            color: oneColor(index),
+                            elevation: 9.0,
                           ),
-                        ),
-                      ],
-                    ),
                   );
                 },
               ),

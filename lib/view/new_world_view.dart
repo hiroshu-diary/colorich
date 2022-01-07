@@ -1,4 +1,3 @@
-import 'package:colorich/dice/d_model.dart';
 import 'package:colorich/model/one_piece.dart';
 import 'package:colorich/model/sqlite.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,17 +19,11 @@ class NewPieceView extends StatefulWidget {
 }
 
 class _NewPieceViewState extends State<NewPieceView> {
-  Color selectedColor = const Color(0xFF000000);
+  Color selectedColor = const Color(0xFFFFAE66);
   final double cardSideLength = window.physicalSize.width * 0.14;
-  final Dice dice = Dice();
   final controller = TextEditingController();
+  final storyController = TextEditingController();
   late OnePiece onePiece;
-
-  void initAddColor() {
-    if (widget.index != null) {
-      setState(() {});
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +90,8 @@ class _NewPieceViewState extends State<NewPieceView> {
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 5, horizontal: 10),
+
+                                  ///２つのColorPickerをタブに分ける。
                                   child: Column(
                                     children: [
                                       ColorPicker(
@@ -156,6 +151,7 @@ class _NewPieceViewState extends State<NewPieceView> {
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                 child: GestureDetector(
                   child: TextFormField(
+                    controller: storyController,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -198,7 +194,7 @@ class _NewPieceViewState extends State<NewPieceView> {
               selectedColor.green,
               selectedColor.blue,
               DateTime.now(),
-              controller.text,
+              storyController.text,
             );
             await DbProvider.create(onePiece);
             //  await DbProvider.setDb();

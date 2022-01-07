@@ -15,7 +15,8 @@ class SettingsView extends StatefulWidget {
 }
 
 var box = Hive.box('myBox');
-bool notifications = box.get('notice', defaultValue: false);
+bool notifyValue = box.get('notice', defaultValue: false);
+bool styleValue = box.get('style', defaultValue: false);
 TimeOfDay time = box.get(
   'timers',
   defaultValue: const TimeOfDay(hour: 21, minute: 00),
@@ -37,11 +38,12 @@ class _SettingsViewState extends State<SettingsView> {
     }
     FlutterLocalNotificationsPlugin().cancelAll();
 
-    if (notifications == true) {
+    if (notifyValue == true) {
       setHelper.notify(time);
     }
   }
 
+  Future putStyle(style) async => await box.put('style', style);
   Future putNotice(notice) async => await box.put('notice', notice);
   Future putTimers(timers) async => await box.put('timers', timers);
   Future putString(timeString) async =>
@@ -64,6 +66,30 @@ class _SettingsViewState extends State<SettingsView> {
             contentPadding: const EdgeInsets.all(9.0),
             sections: [
               SettingsSection(
+                title: 'STYLE',
+                titlePadding: const EdgeInsets.only(top: 15, left: 15),
+                titleTextStyle: const TextStyle(fontSize: 20),
+                tiles: [
+                  SettingsTile.switchTile(
+                    title: styleValue == false ? 'Puzzle' : 'Card',
+                    titleTextStyle: const TextStyle(fontSize: 18),
+                    leading: Icon(
+                      styleValue == false
+                          ? FontAwesomeIcons.puzzlePiece
+                          : Icons.view_comfortable,
+                      size: 30,
+                    ),
+                    switchValue: styleValue,
+                    onToggle: (bool value) {
+                      setState(() {
+                        styleValue = value;
+                        putStyle(value);
+                      });
+                    },
+                  ),
+                ],
+              ),
+              SettingsSection(
                 title: 'BACK',
                 titlePadding: const EdgeInsets.only(top: 15, left: 15),
                 titleTextStyle: const TextStyle(fontSize: 20),
@@ -72,18 +98,18 @@ class _SettingsViewState extends State<SettingsView> {
                     title: 'Notification',
                     titleTextStyle: const TextStyle(fontSize: 18),
                     leading: Icon(
-                      notifications == false
+                      notifyValue == false
                           ? Icons.alarm_off_outlined
                           : Icons.alarm_on_outlined,
                       size: 30,
                     ),
-                    switchValue: notifications,
+                    switchValue: notifyValue,
                     onToggle: (bool value) {
                       setState(
                         () {
-                          notifications = !notifications;
-                          putNotice(notifications);
-                          if (notifications == false) {
+                          notifyValue = !notifyValue;
+                          putNotice(notifyValue);
+                          if (notifyValue == false) {
                             setHelper.notify(time);
                           } else {
                             setHelper.dumpNotify();
@@ -101,7 +127,7 @@ class _SettingsViewState extends State<SettingsView> {
                         selectTime();
                         // putTimers(time);
                         putString(timeString);
-                        if (notifications == true) {
+                        if (notifyValue == true) {
                           setHelper.dumpNotify();
                           setHelper.notify(time);
                         }
@@ -141,14 +167,6 @@ class _SettingsViewState extends State<SettingsView> {
                     leading: Platform.isIOS
                         ? const Icon(FontAwesomeIcons.appStore, size: 30)
                         : const Icon(FontAwesomeIcons.googlePlay, size: 30),
-                  ),
-                  SettingsTile(
-                    onPressed: (BuildContext context) {
-                      setHelper.launchInsta();
-                    },
-                    title: 'Instagram',
-                    titleTextStyle: const TextStyle(fontSize: 18),
-                    leading: const Icon(FontAwesomeIcons.instagram, size: 30),
                   ),
                 ],
               ),
