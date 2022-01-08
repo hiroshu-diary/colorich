@@ -1,3 +1,4 @@
+import 'package:colorich/view/laugh_tail_view.dart';
 import 'package:colorich/view_model/function.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -16,7 +17,7 @@ class SettingsView extends StatefulWidget {
 
 var box = Hive.box('myBox');
 bool notifyValue = box.get('notice', defaultValue: false);
-bool styleValue = box.get('style', defaultValue: false);
+bool styleValue = box.get('style', defaultValue: true);
 TimeOfDay time = box.get(
   'timers',
   defaultValue: const TimeOfDay(hour: 21, minute: 00),
@@ -56,6 +57,19 @@ class _SettingsViewState extends State<SettingsView> {
       builder: (context, box, widget) {
         return Scaffold(
           appBar: NewGradientAppBar(
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: InkWell(
+                onTap: () {
+                  Nav.navigate(
+                    context,
+                    const LaughTailView(),
+                    const Offset(-1, 0),
+                  );
+                },
+                child: const Icon(Icons.arrow_back_ios),
+              ),
+            ),
             centerTitle: true,
             gradient: const LinearGradient(
               colors: [Colors.blueAccent, Colors.cyanAccent],
@@ -146,18 +160,18 @@ class _SettingsViewState extends State<SettingsView> {
                 ],
               ),
               SettingsSection(
-                title: 'ACTIONS',
+                title: 'ACTION',
                 titlePadding: const EdgeInsets.only(top: 20, left: 15),
                 titleTextStyle: const TextStyle(fontSize: 20),
                 tiles: [
-                  SettingsTile(
-                    onPressed: (BuildContext context) {
-                      setHelper.launchMail();
-                    },
-                    title: 'Message',
-                    titleTextStyle: const TextStyle(fontSize: 18),
-                    leading: const Icon(Icons.mail_outline_outlined, size: 30),
-                  ),
+                  // SettingsTile(
+                  //   onPressed: (BuildContext context) {
+                  //     setHelper.launchMail();
+                  //   },
+                  //   title: 'Message',
+                  //   titleTextStyle: const TextStyle(fontSize: 18),
+                  //   leading: const Icon(Icons.mail_outline_outlined, size: 30),
+                  // ),
                   SettingsTile(
                     onPressed: (BuildContext context) {
                       setHelper.launchAppStore();

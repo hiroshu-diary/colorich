@@ -84,12 +84,10 @@ class _LaughTailViewState extends State<LaughTailView>
             child: GestureDetector(
               child: const Icon(Icons.settings, size: 33, color: Colors.black),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return SettingsView();
-                }));
+                Nav.navigate(context, const SettingsView(), const Offset(1, 0));
               },
               onLongPress: () {
-                Nav.navigate(context, const ColoDice(), const Offset(0, -1));
+                Nav.navigate(context, const ColoDice(), const Offset(0, 0));
               },
             ),
           )
@@ -223,13 +221,17 @@ class _LaughTailViewState extends State<LaughTailView>
                                   sigma: 3,
                                   color: oneColor(index),
                                   offset: const Offset(-3, 0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: index % 3 != 0
-                                          ? oneColor(index - 1)
-                                          : const Color.fromRGBO(0, 0, 0, 0),
-                                    ),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: index % 3 != 0
+                                              ? oneColor(index - 1)
+                                              : Colors.transparent,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -249,7 +251,7 @@ class _LaughTailViewState extends State<LaughTailView>
                                       shape: BoxShape.circle,
                                       color: index > 2
                                           ? oneColor(index - 3)
-                                          : const Color.fromRGBO(0, 0, 0, 0),
+                                          : Colors.transparent,
                                     ),
                                   ),
                                 ),

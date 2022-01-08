@@ -21,9 +21,23 @@ class NewPieceView extends StatefulWidget {
 class _NewPieceViewState extends State<NewPieceView> {
   Color selectedColor = const Color(0xFFFFAE66);
   final double cardSideLength = window.physicalSize.width * 0.14;
-  final controller = TextEditingController();
-  final storyController = TextEditingController();
+  var controller = TextEditingController();
+  var storyController = TextEditingController();
   late OnePiece onePiece;
+
+  @override
+  void initState() {
+    controller = TextEditingController();
+    storyController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    storyController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +67,7 @@ class _NewPieceViewState extends State<NewPieceView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    //Howdy?
                     SimpleShadow(
                       child: const Text(
                         'Howdy?',
@@ -78,32 +93,34 @@ class _NewPieceViewState extends State<NewPieceView> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
+                            var currentIndex = 0;
                             return AlertDialog(
-                              insetPadding: const EdgeInsets.all(20),
+                              // insetPadding: const EdgeInsets.all(20),
                               titlePadding: const EdgeInsets.all(0),
-                              contentPadding: const EdgeInsets.all(0),
+                              contentPadding: const EdgeInsets.all(5.0),
                               shape: const RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
                               ),
-                              content: SingleChildScrollView(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 10),
-
-                                  ///２つのColorPickerをタブに分ける。
-                                  child: Column(
-                                    children: [
-                                      ColorPicker(
+                              content: SizedBox(
+                                height: 420,
+                                child: CupertinoTabScaffold(
+                                  tabBuilder: (context, currentIndex) {
+                                    if (currentIndex == 0) {
+                                      return ColorPicker(
                                         pickerColor: selectedColor,
                                         hexInputController: controller,
                                         onColorChanged: (value) {
                                           setState(() => selectedColor = value);
                                         },
                                         colorPickerWidth: 300,
-                                        pickerAreaHeightPercent: 0.7,
+                                        pickerAreaHeightPercent: 0.65,
                                         enableAlpha: false,
-                                        labelTypes: const [ColorLabelType.rgb],
+                                        labelTypes: const [
+                                          ColorLabelType.rgb,
+                                          ColorLabelType.hsv,
+                                          ColorLabelType.hsl,
+                                        ],
                                         displayThumbColor: true,
                                         paletteType: PaletteType.hueWheel,
                                         pickerAreaBorderRadius:
@@ -112,8 +129,9 @@ class _NewPieceViewState extends State<NewPieceView> {
                                           topRight: Radius.circular(2),
                                         ),
                                         hexInputBar: true,
-                                      ),
-                                      SlidePicker(
+                                      );
+                                    } else {
+                                      return SlidePicker(
                                         pickerColor: selectedColor,
                                         onColorChanged: (Color value) {
                                           setState(() {
@@ -133,7 +151,19 @@ class _NewPieceViewState extends State<NewPieceView> {
                                             const BorderRadius.all(
                                           Radius.circular(3),
                                         ),
+                                      );
+                                    }
+                                  },
+                                  tabBar: CupertinoTabBar(
+                                    currentIndex: currentIndex,
+                                    items: const [
+                                      BottomNavigationBarItem(
+                                        icon: Icon(Icons.colorize),
                                       ),
+                                      BottomNavigationBarItem(
+                                        icon: Icon(
+                                            CupertinoIcons.slider_horizontal_3),
+                                      )
                                     ],
                                   ),
                                 ),
