@@ -17,7 +17,7 @@ class SettingsView extends StatefulWidget {
 
 var box = Hive.box('myBox');
 bool notifyValue = box.get('notice', defaultValue: false);
-bool styleValue = box.get('style', defaultValue: true);
+bool styleValue = box.get('style', defaultValue: false);
 TimeOfDay time = box.get(
   'timers',
   defaultValue: const TimeOfDay(hour: 21, minute: 00),
@@ -85,12 +85,12 @@ class _SettingsViewState extends State<SettingsView> {
                 titleTextStyle: const TextStyle(fontSize: 20),
                 tiles: [
                   SettingsTile.switchTile(
-                    title: styleValue == false ? 'Puzzle' : 'Card',
+                    title: styleValue == false ? 'Card' : 'Puzzle',
                     titleTextStyle: const TextStyle(fontSize: 18),
                     leading: Icon(
                       styleValue == false
-                          ? FontAwesomeIcons.puzzlePiece
-                          : Icons.view_comfortable,
+                          ? Icons.view_comfortable
+                          : FontAwesomeIcons.puzzlePiece,
                       size: 30,
                     ),
                     switchValue: styleValue,

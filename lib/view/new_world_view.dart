@@ -217,7 +217,6 @@ class _NewPieceViewState extends State<NewPieceView> {
           color: selectedColor,
           hoverColor: selectedColor,
           onPressed: () async {
-            // todo ②new_world_viewの確定ボタン後、db追加、UI更新
             onePiece = OnePiece(
               widget.timeLine.length,
               selectedColor.red,

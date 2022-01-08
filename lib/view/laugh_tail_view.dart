@@ -94,14 +94,7 @@ class _LaughTailViewState extends State<LaughTailView>
         ],
         elevation: 0.0,
       ),
-      backgroundColor: styleValue == false
-          ? Color.fromARGB(
-              255,
-              dice.hexRGB[dice.ranHR],
-              dice.hexRGB[dice.ranHG],
-              dice.hexRGB[dice.ranHB],
-            )
-          : Colors.white,
+      backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: MaterialButton(
         onPressed: () async {
@@ -196,7 +189,8 @@ class _LaughTailViewState extends State<LaughTailView>
                       });
                     },
                     child: styleValue == false
-                        ? Stack(
+                        ? Card(color: oneColor(index), elevation: 9.0)
+                        : Stack(
                             children: <Widget>[
                               //ほぼ正方形
                               SimpleShadow(
@@ -211,56 +205,72 @@ class _LaughTailViewState extends State<LaughTailView>
                                 ),
                               ),
                               //左右コネクト
+                              //todo Puzzuleの謎の影。
                               Positioned(
-                                left: -3,
+                                left: 0,
                                 top: (deviceWidth - sidePadding * 2) / 6 -
                                     connectCircle / 2,
                                 width: connectCircle,
                                 height: connectCircle,
-                                child: SimpleShadow(
-                                  sigma: 3,
-                                  color: oneColor(index),
-                                  offset: const Offset(-3, 0),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: index % 3 != 0
-                                              ? oneColor(index - 1)
-                                              : Colors.transparent,
-                                        ),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: index % 3 != 0
+                                            ? oneColor(index - 1)
+                                            : Colors.transparent,
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    Positioned(
+                                      left: -10,
+                                      top: connectCircle / 2 - 9,
+                                      height: 18,
+                                      width: 18,
+                                      child: Container(
+                                        color: index % 3 != 0
+                                            ? oneColor(index - 1)
+                                            : Colors.transparent,
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
                               //上下コネクト
                               Positioned(
-                                top: -3,
+                                top: -1,
                                 left: (deviceWidth - sidePadding * 2) / 6 -
                                     connectCircle / 2,
                                 width: connectCircle,
                                 height: connectCircle,
-                                child: SimpleShadow(
-                                  sigma: 3,
-                                  color: oneColor(index),
-                                  offset: const Offset(0, -3),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: index > 2
-                                          ? oneColor(index - 3)
-                                          : Colors.transparent,
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: index > 2
+                                            ? oneColor(index - 3)
+                                            : Colors.transparent,
+                                      ),
                                     ),
-                                  ),
+                                    Positioned(
+                                      top: -10,
+                                      left: connectCircle / 2 - 9,
+                                      height: 18,
+                                      width: 18,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: index > 2
+                                              ? oneColor(index - 3)
+                                              : Colors.transparent,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
-                          )
-                        : Card(
-                            color: oneColor(index),
-                            elevation: 9.0,
                           ),
                   );
                 },
