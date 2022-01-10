@@ -79,6 +79,7 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
                             CupertinoDialogAction(
                               child: const Text('はい'),
                               onPressed: () async {
+                                //todo 削除→はい、にした時画面が崩れてる？
                                 await DbProvider.delete(thisPiece.oneId);
                                 Navigator.pop(context);
                                 await Future.delayed(

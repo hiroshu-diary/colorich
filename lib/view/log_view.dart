@@ -58,7 +58,7 @@ class _RGBPieState extends State<RGBPie> {
           centerText: "RGB",
           centerTextStyle: const TextStyle(
             color: Colors.white,
-            backgroundColor: Colors.black12,
+            backgroundColor: Colors.black26,
             fontSize: 25,
             fontWeight: FontWeight.bold,
           ),
