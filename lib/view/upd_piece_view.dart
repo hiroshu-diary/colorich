@@ -86,7 +86,7 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
                                     const Duration(milliseconds: 100));
                                 Navigator.pop(context);
                                 // reBuild();
-                              },
+                             },
                             ),
                             CupertinoDialogAction(
                               child: const Text('いいえ'),

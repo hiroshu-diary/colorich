@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'd_model.dart';
@@ -72,7 +71,7 @@ class ColoDiceState extends State<ColoDice> {
                   color: Colors.red,
                 ),
               ),
-              const SizedBox(width: 5.0),
+              const SizedBox(width: 4.0),
               Text(
                 'Green: ${selectedColor.green}',
                 style: const TextStyle(
@@ -81,7 +80,7 @@ class ColoDiceState extends State<ColoDice> {
                   color: Colors.green,
                 ),
               ),
-              const SizedBox(width: 5.0),
+              const SizedBox(width: 4.0),
               Text(
                 'Blue: ${selectedColor.blue}',
                 style: const TextStyle(
