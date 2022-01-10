@@ -29,6 +29,7 @@ dependencies:
   settings_ui: ^1.0.0
   flutter_local_notifications: ^9.1.5
   intl: ^0.17.0
+  pie_chart: ^5.1.0
 
 
 

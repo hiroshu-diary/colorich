@@ -2,16 +2,12 @@
 import 'package:colorich/model/one_piece.dart';
 import 'package:colorich/model/sqlite.dart';
 import 'package:colorich/view/settings_view.dart';
-import 'package:colorich/view_model/function.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 import 'dart:ui';
-
-import 'laugh_tail_view.dart';
 
 class UpdatePieceView extends StatefulWidget {
   final OnePiece thisPiece;
@@ -59,16 +55,6 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0.0,
-        // todo Animationsを使って邪魔そうなら、leadingを削除↓
-        // leading: Padding(
-        //   padding: const EdgeInsets.only(left: 15.0),
-        //   child: GestureDetector(
-        //     child: const Icon(Icons.arrow_back_ios),
-        //     onTap: () {
-        //       goToLaughTail(context);
-        //     },
-        //   ),
-        // ),
         title: Text(
           outputFormat.format(createdTime),
           style: const TextStyle(fontSize: 15),

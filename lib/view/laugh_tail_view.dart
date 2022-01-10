@@ -2,6 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:colorich/dice/d_model.dart';
 import 'package:colorich/model/one_piece.dart';
 import 'package:colorich/model/sqlite.dart';
+import 'package:colorich/view/log_view.dart';
 import 'package:colorich/view/settings_view.dart';
 import 'package:colorich/view/upd_piece_view.dart';
 import 'package:colorich/view_model/function.dart';
@@ -105,7 +106,21 @@ class _LaughTailViewState extends State<LaughTailView>
           //上行の一瞬スクロールは、Riverpodを使わず、Rebuildが難しくなった時用。
           scl.afterNewPiece(scrollController);
         },
-        onLongPress: () {},
+        onLongPress: () {
+          double countR = 0;
+          double countG = 0;
+          double countB = 0;
+          for (int i = 0; i < timeLine.length; i++) {
+            countR += timeLine[i].oneRed;
+            countG += timeLine[i].oneGreen;
+            countB += timeLine[i].oneBlue;
+          }
+          Nav.navigate(
+            context,
+            RGBPie(countR: countR, countG: countG, countB: countB),
+            const Offset(-1, 0),
+          );
+        },
         shape: const CircleBorder(),
         child: CircleAvatar(
             radius: 42,
