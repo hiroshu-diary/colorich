@@ -1,7 +1,7 @@
 import 'dart:math';
 
 class Dice {
-  List<dynamic> hexRGB = [
+  List<dynamic> decimalList = [
     00,
     01,
     02,
@@ -259,7 +259,7 @@ class Dice {
     254,
     255,
   ];
-  List<dynamic> copiedHEX = [
+  List<dynamic> hexList = [
     '00',
     '01',
     '02',
@@ -518,7 +518,7 @@ class Dice {
     'FF',
   ];
 
-  int ranHR = Random().nextInt(256);
-  int ranHG = Random().nextInt(256);
-  int ranHB = Random().nextInt(256);
+  int randomHexRed = Random().nextInt(256);
+  int randomHexGreen = Random().nextInt(256);
+  int randomHexBlue = Random().nextInt(256);
 }

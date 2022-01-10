@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:colorich/dice/d_model.dart';
 import 'package:colorich/dice/d_view.dart';
+import 'package:colorich/dice/d_view_z.dart';
 import 'package:colorich/model/one_piece.dart';
 import 'package:colorich/model/sqlite.dart';
 import 'package:colorich/view/settings_view.dart';
@@ -165,7 +166,7 @@ class _NewPieceViewState extends State<NewPieceView> {
                                         ),
                                       );
                                     } else {
-                                      return ColoDice(
+                                      return ColoDiceZ(
                                           selectedColor: selectedColor);
                                     }
                                   },
@@ -180,9 +181,7 @@ class _NewPieceViewState extends State<NewPieceView> {
                                             CupertinoIcons.slider_horizontal_3),
                                       ),
                                       BottomNavigationBarItem(
-                                        icon: Icon(
-                                          CupertinoIcons.shuffle,
-                                        ),
+                                        icon: Icon(CupertinoIcons.shuffle),
                                       ),
                                     ],
                                   ),

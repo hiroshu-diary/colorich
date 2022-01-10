@@ -12,8 +12,6 @@ class ColoDice extends StatefulWidget {
 }
 
 class ColoDiceState extends State<ColoDice> {
-  final Dice dice = Dice();
-  final diceLength = 200.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +20,16 @@ class ColoDiceState extends State<ColoDice> {
   }
 
   Center randomDice(Color selectedColor) {
+    final Dice dice = Dice();
+    const diceLength = 200.0;
+    void shuffleColor() {
+      setState(() {
+        dice.randomHexRed = Random().nextInt(256);
+        dice.randomHexGreen = Random().nextInt(256);
+        dice.randomHexBlue = Random().nextInt(256);
+      });
+    }
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -38,21 +46,23 @@ class ColoDiceState extends State<ColoDice> {
               elevation: 20.0,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(60)),
+              color: selectedColor,
               onPressed: () {
+                shuffleColor();
                 setState(() {
-                  dice.ranHR = Random().nextInt(256);
-                  dice.ranHG = Random().nextInt(256);
-                  dice.ranHB = Random().nextInt(256);
-                  selectedColor =
-                      Color.fromRGBO(dice.ranHR, dice.ranHG, dice.ranHB, 1);
+                  selectedColor = Color.fromRGBO(
+                    dice.randomHexRed,
+                    dice.randomHexGreen,
+                    dice.randomHexBlue,
+                    1,
+                  );
                 });
               },
-              color: selectedColor,
             ),
           ),
           const SizedBox(height: 10.0),
           Text(
-            '#${dice.copiedHEX[selectedColor.red]}${dice.copiedHEX[selectedColor.green]}${dice.copiedHEX[selectedColor.blue]}',
+            '#${dice.hexList[selectedColor.red]}${dice.hexList[selectedColor.green]}${dice.hexList[selectedColor.blue]}',
             style: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.w700,
