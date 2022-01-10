@@ -59,7 +59,7 @@ class _SettingsViewState extends State<SettingsView> {
           appBar: NewGradientAppBar(
             leading: Padding(
               padding: const EdgeInsets.only(left: 15.0),
-              child: InkWell(
+              child: GestureDetector(
                 onTap: () {
                   Nav.navigate(
                     context,
@@ -201,18 +201,6 @@ class _SettingsViewState extends State<SettingsView> {
                     title: '',
                     titleTextStyle: TextStyle(fontSize: 18),
                     trailing: Text('最古ピースへ移動'),
-                  ),
-                  SettingsTile(
-                    leading: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: const [
-                        Icon(Icons.settings),
-                        Text('ボタンをロングタップ'),
-                      ],
-                    ),
-                    title: '',
-                    titleTextStyle: const TextStyle(fontSize: 18),
-                    trailing: const Text('ColoDice へ移動'),
                   ),
                   SettingsTile(
                     leading: Row(

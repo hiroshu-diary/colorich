@@ -1,5 +1,10 @@
+import 'dart:math';
+
+import 'package:colorich/dice/d_model.dart';
+import 'package:colorich/dice/d_view.dart';
 import 'package:colorich/model/one_piece.dart';
 import 'package:colorich/model/sqlite.dart';
+import 'package:colorich/view/settings_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -21,20 +26,22 @@ class NewPieceView extends StatefulWidget {
 class _NewPieceViewState extends State<NewPieceView> {
   Color selectedColor = const Color(0xFFFFAE66);
   final double cardSideLength = window.physicalSize.width * 0.14;
-  var controller = TextEditingController();
+  final double diceLength = 200;
+  var colorController = TextEditingController();
   var storyController = TextEditingController();
   late OnePiece onePiece;
+  Dice dice = Dice();
 
   @override
   void initState() {
-    controller = TextEditingController();
+    colorController = TextEditingController();
     storyController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    colorController.dispose();
     storyController.dispose();
     super.dispose();
   }
@@ -53,7 +60,12 @@ class _NewPieceViewState extends State<NewPieceView> {
                 padding: const EdgeInsets.only(top: 40, bottom: 10),
                 child: SimpleShadow(
                   child: SizedBox(
-                    child: Card(color: selectedColor),
+                    child: styleValue == false
+                        ? Card(color: selectedColor)
+                        : Image.asset(
+                            'images/puzzule.jpg',
+                            color: selectedColor,
+                          ),
                     width: cardSideLength,
                     height: cardSideLength,
                   ),
@@ -103,18 +115,18 @@ class _NewPieceViewState extends State<NewPieceView> {
                                     BorderRadius.all(Radius.circular(20)),
                               ),
                               content: SizedBox(
-                                height: 420,
+                                height: 390,
                                 child: CupertinoTabScaffold(
                                   tabBuilder: (context, currentIndex) {
                                     if (currentIndex == 0) {
                                       return ColorPicker(
                                         pickerColor: selectedColor,
-                                        hexInputController: controller,
+                                        hexInputController: colorController,
                                         onColorChanged: (value) {
                                           setState(() => selectedColor = value);
                                         },
-                                        colorPickerWidth: 300,
-                                        pickerAreaHeightPercent: 0.65,
+                                        colorPickerWidth: 390,
+                                        pickerAreaHeightPercent: 0.5,
                                         enableAlpha: false,
                                         labelTypes: const [
                                           ColorLabelType.rgb,
@@ -130,7 +142,7 @@ class _NewPieceViewState extends State<NewPieceView> {
                                         ),
                                         hexInputBar: true,
                                       );
-                                    } else {
+                                    } else if (currentIndex == 1) {
                                       return SlidePicker(
                                         pickerColor: selectedColor,
                                         onColorChanged: (Color value) {
@@ -152,6 +164,9 @@ class _NewPieceViewState extends State<NewPieceView> {
                                           Radius.circular(3),
                                         ),
                                       );
+                                    } else {
+                                      return ColoDice(
+                                          selectedColor: selectedColor);
                                     }
                                   },
                                   tabBar: CupertinoTabBar(
@@ -163,7 +178,12 @@ class _NewPieceViewState extends State<NewPieceView> {
                                       BottomNavigationBarItem(
                                         icon: Icon(
                                             CupertinoIcons.slider_horizontal_3),
-                                      )
+                                      ),
+                                      BottomNavigationBarItem(
+                                        icon: Icon(
+                                          CupertinoIcons.shuffle,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),

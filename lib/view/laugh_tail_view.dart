@@ -1,12 +1,10 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:colorich/dice/d_model.dart';
-import 'package:colorich/dice/d_view.dart';
 import 'package:colorich/model/one_piece.dart';
 import 'package:colorich/model/sqlite.dart';
 import 'package:colorich/view/settings_view.dart';
 import 'package:colorich/view/upd_piece_view.dart';
 import 'package:colorich/view_model/function.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:simple_shadow/simple_shadow.dart';
@@ -70,6 +68,7 @@ class _LaughTailViewState extends State<LaughTailView>
         centerTitle: false,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
+        elevation: 0.0,
         title: Padding(
           padding: const EdgeInsets.only(left: 5),
           child: GestureDetector(
@@ -86,13 +85,9 @@ class _LaughTailViewState extends State<LaughTailView>
               onTap: () {
                 Nav.navigate(context, const SettingsView(), const Offset(1, 0));
               },
-              onLongPress: () {
-                Nav.navigate(context, const ColoDice(), const Offset(0, 0));
-              },
             ),
           )
         ],
-        elevation: 0.0,
       ),
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -145,120 +140,78 @@ class _LaughTailViewState extends State<LaughTailView>
                   crossAxisCount: 3,
                 ),
                 itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
+                  return ani.OpenContainer(
+                    //AnimationsによるCardUIの崩れを、以下の６行で補正
+                    clipBehavior: Clip.none,
+                    closedElevation: 0.0,
+                    openElevation: 0.0,
+                    closedColor: Colors.transparent,
+                    middleColor: Colors.transparent,
+                    openColor: Colors.transparent,
+                    openBuilder: (context, thisPiece) {
                       OnePiece thisPiece = timeLine[index];
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return UpdatePieceView(
-                          thisPiece: thisPiece,
-                        );
-                      }));
+                      return UpdatePieceView(thisPiece: thisPiece);
                     },
-
-                    //CupertinoDialogで削除ポップ
-                    onLongPress: () {
-                      setState(() {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              OnePiece thisPiece = timeLine[index];
-                              return CupertinoAlertDialog(
-                                content: const Text(
-                                  '本当に削除してもいいですか？',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                                actions: [
-                                  CupertinoDialogAction(
-                                    child: const Text('はい'),
-                                    onPressed: () async {
-                                      await DbProvider.delete(thisPiece.oneId);
-                                      Navigator.pop(context);
-                                      reBuild();
-                                    },
-                                  ),
-                                  CupertinoDialogAction(
-                                    child: const Text('いいえ'),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  )
-                                ],
-                              );
-                            });
-                      });
-                    },
-                    child: styleValue == false
-                        ? Card(color: oneColor(index), elevation: 9.0)
-                        : Stack(
-                            children: <Widget>[
-                              //ほぼ正方形
-                              SimpleShadow(
-                                offset: const Offset(-2, -2),
-                                sigma: 3,
-                                child: Container(
-                                  margin: const EdgeInsets.all(0.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(21.0),
-                                    color: oneColor(index),
+                    closedBuilder: (context, openContainer) {
+                      reBuild();
+                      return styleValue == false
+                          ? Card(color: oneColor(index), elevation: 9.0)
+                          : Stack(
+                              children: <Widget>[
+                                //ほぼ正方形
+                                SimpleShadow(
+                                  offset: const Offset(-2, -2),
+                                  sigma: 3,
+                                  child: Container(
+                                    margin: const EdgeInsets.all(0.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(21.0),
+                                      color: oneColor(index),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              //左右コネクト
-                              //todo Puzzuleの謎の影。
-                              Positioned(
-                                left: 0,
-                                top: (deviceWidth - sidePadding * 2) / 6 -
-                                    connectCircle / 2,
-                                width: connectCircle,
-                                height: connectCircle,
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: index % 3 != 0
-                                            ? oneColor(index - 1)
-                                            : Colors.transparent,
+                                //左右コネクト
+                                //todo Puzzuleの謎の影。
+                                Positioned(
+                                  left: 0,
+                                  top: (deviceWidth - sidePadding * 2) / 6 -
+                                      connectCircle / 2,
+                                  width: connectCircle,
+                                  height: connectCircle,
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: index % 3 != 0
+                                              ? oneColor(index - 1)
+                                              : Colors.transparent,
+                                        ),
                                       ),
-                                    ),
-                                    Positioned(
-                                      left: -10,
-                                      top: connectCircle / 2 - 9,
-                                      height: 18,
-                                      width: 18,
-                                      child: Container(
-                                        color: index % 3 != 0
-                                            ? oneColor(index - 1)
-                                            : Colors.transparent,
-                                      ),
-                                    )
-                                  ],
+                                      Positioned(
+                                        left: -10,
+                                        top: connectCircle / 2 - 9,
+                                        height: 18,
+                                        width: 18,
+                                        child: Container(
+                                          color: index % 3 != 0
+                                              ? oneColor(index - 1)
+                                              : Colors.transparent,
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              //上下コネクト
-                              Positioned(
-                                top: -1,
-                                left: (deviceWidth - sidePadding * 2) / 6 -
-                                    connectCircle / 2,
-                                width: connectCircle,
-                                height: connectCircle,
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: index > 2
-                                            ? oneColor(index - 3)
-                                            : Colors.transparent,
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: -10,
-                                      left: connectCircle / 2 - 9,
-                                      height: 18,
-                                      width: 18,
-                                      child: Container(
+                                //上下コネクト
+                                Positioned(
+                                  top: -1,
+                                  left: (deviceWidth - sidePadding * 2) / 6 -
+                                      connectCircle / 2,
+                                  width: connectCircle,
+                                  height: connectCircle,
+                                  child: Stack(
+                                    children: [
+                                      Container(
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           color: index > 2
@@ -266,12 +219,26 @@ class _LaughTailViewState extends State<LaughTailView>
                                               : Colors.transparent,
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      Positioned(
+                                        top: -10,
+                                        left: connectCircle / 2 - 9,
+                                        height: 18,
+                                        width: 18,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: index > 2
+                                                ? oneColor(index - 3)
+                                                : Colors.transparent,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
+                              ],
+                            );
+                    },
                   );
                 },
               ),
