@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:colorich/dice/d_model.dart';
-import 'package:colorich/dice/d_view.dart';
 import 'package:colorich/dice/d_view_z.dart';
 import 'package:colorich/model/one_piece.dart';
 import 'package:colorich/model/sqlite.dart';
