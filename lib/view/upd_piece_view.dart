@@ -21,7 +21,7 @@ class UpdatePieceView extends StatefulWidget {
 class _UpdatePieceViewState extends State<UpdatePieceView> {
   final double cardSideLength = window.physicalSize.width * 0.20;
   var colorController = TextEditingController();
-  var storyController = TextEditingController();
+  var storyController = TextEditingController(text: '');
   final DateFormat outputFormat = DateFormat('yyyy年 M月 d日 h時 m分');
   late OnePiece onePiece;
   //Color selectedColor = Colors.grey;
@@ -47,7 +47,9 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
     int nowBlue = widget.thisPiece.oneBlue;
     DateTime createdTime = widget.thisPiece.oneTime;
     String? nowStory = widget.thisPiece.oneStory;
+    nowStory = nowStory ?? '';
     Color selectedColor = Color.fromRGBO(nowRed, nowGreen, nowBlue, 1);
+    storyController = TextEditingController(text: nowStory);
 
     return Scaffold(
       appBar: AppBar(
@@ -86,7 +88,7 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
                                     const Duration(milliseconds: 100));
                                 Navigator.pop(context);
                                 // reBuild();
-                             },
+                              },
                             ),
                             CupertinoDialogAction(
                               child: const Text('いいえ'),
@@ -258,7 +260,7 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
               createdTime,
               storyController.text,
             );
-            // await DbProvider.update(onePiece);
+            await DbProvider.update(onePiece);
             Navigator.pop(context);
           },
         ),
