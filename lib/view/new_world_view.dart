@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:colorich/dice/d_model.dart';
 import 'package:colorich/dice/d_view.dart';
 import 'package:colorich/model/one_piece.dart';
@@ -24,7 +23,6 @@ class NewPieceView extends StatefulWidget {
 }
 
 class _NewPieceViewState extends State<NewPieceView> {
-  //Color selectedColor = const Color(0xFFFFAE66);
   Color selectedColor = Color.fromRGBO(
     Random().nextInt(256),
     Random().nextInt(256),
