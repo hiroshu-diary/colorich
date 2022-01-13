@@ -3,15 +3,20 @@ import 'dart:ui';
 import 'dart:math';
 import 'd_model.dart';
 
-class ColoDiceZ extends StatefulWidget {
+class ColoDice extends StatefulWidget {
   final Color selectedColor;
-  const ColoDiceZ({Key? key, required this.selectedColor}) : super(key: key);
+  final ValueChanged<Color> onColorChanged;
+  const ColoDice({
+    Key? key,
+    required this.selectedColor,
+    required this.onColorChanged,
+  }) : super(key: key);
 
   @override
-  _ColoDiceZState createState() => _ColoDiceZState();
+  _ColoDiceState createState() => _ColoDiceState();
 }
 
-class _ColoDiceZState extends State<ColoDiceZ> {
+class _ColoDiceState extends State<ColoDice> {
   final Dice dice = Dice();
   final diceLength = 200.0;
 
@@ -52,6 +57,7 @@ class _ColoDiceZState extends State<ColoDiceZ> {
                     dice.randomHexBlue,
                     1,
                   );
+                  widget.onColorChanged(selectedColor);
                 });
               },
               color: Color.fromARGB(

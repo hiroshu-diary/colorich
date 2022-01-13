@@ -1,4 +1,5 @@
 //編集画面
+import 'package:colorich/dice/d_view.dart';
 import 'package:colorich/model/one_piece.dart';
 import 'package:colorich/model/sqlite.dart';
 import 'package:colorich/view/settings_view.dart';
@@ -153,7 +154,7 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
                                     ),
                                     hexInputBar: true,
                                   );
-                                } else {
+                                } else if (currentIndex == 1) {
                                   return SlidePicker(
                                     pickerColor: selectedColor,
                                     onColorChanged: (Color value) {
@@ -175,6 +176,15 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
                                       Radius.circular(3),
                                     ),
                                   );
+                                } else {
+                                  return ColoDice(
+                                    selectedColor: selectedColor,
+                                    onColorChanged: (Color value) {
+                                      setState(() {
+                                        selectedColor = value;
+                                      });
+                                    },
+                                  );
                                 }
                               },
                               tabBar: CupertinoTabBar(
@@ -185,8 +195,12 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
                                   ),
                                   BottomNavigationBarItem(
                                     icon: Icon(
-                                        CupertinoIcons.slider_horizontal_3),
-                                  )
+                                      CupertinoIcons.slider_horizontal_3,
+                                    ),
+                                  ),
+                                  BottomNavigationBarItem(
+                                    icon: Icon(CupertinoIcons.shuffle),
+                                  ),
                                 ],
                               ),
                             ),
