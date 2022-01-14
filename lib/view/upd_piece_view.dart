@@ -228,6 +228,7 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                 child: GestureDetector(
+                  onDoubleTap: () => FocusScope.of(context).unfocus(),
                   child: TextFormField(
                     controller: storyController,
                     textAlign: TextAlign.start,
@@ -250,35 +251,36 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
                   ),
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
             ],
           ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SimpleShadow(
-        opacity: 0.4,
-        color: Colors.black,
-        offset: const Offset(2, 2),
-        child: IconButton(
-          icon: const Icon(Icons.update),
-          iconSize: 70,
-          color: selectedColor,
-          hoverColor: selectedColor,
-          onPressed: () async {
-            onePiece = OnePiece(
-              widget.thisPiece.oneId,
-              selectedColor.red,
-              selectedColor.green,
-              selectedColor.blue,
-              createdTime,
-              storyController.text,
-            );
-            await DbProvider.update(onePiece);
-            Navigator.pop(context);
-          },
-        ),
-      ),
+      floatingActionButton: FocusScope.of(context).hasFocus
+          ? null
+          : SimpleShadow(
+              opacity: 0.4,
+              color: Colors.black,
+              offset: const Offset(2, 2),
+              child: IconButton(
+                icon: const Icon(Icons.update),
+                iconSize: 70,
+                color: selectedColor,
+                hoverColor: selectedColor,
+                onPressed: () async {
+                  onePiece = OnePiece(
+                    widget.thisPiece.oneId,
+                    selectedColor.red,
+                    selectedColor.green,
+                    selectedColor.blue,
+                    createdTime,
+                    storyController.text,
+                  );
+                  await DbProvider.update(onePiece);
+                  Navigator.pop(context);
+                },
+              ),
+            ),
     );
   }
 }

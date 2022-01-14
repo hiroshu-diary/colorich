@@ -109,7 +109,7 @@ class _LaughTailViewState extends State<LaughTailView>
           //上行の一瞬スクロールは、Riverpodを使わず、Rebuildが難しくなった時用。
           scl.afterNewPiece(scrollController);
         },
-        onLongPress: () {
+        onLongPress: () async {
           double countR = 0;
           double countG = 0;
           double countB = 0;
