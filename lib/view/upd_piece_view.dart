@@ -25,7 +25,7 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
   var storyController = TextEditingController(text: '');
   final DateFormat outputFormat = DateFormat('yyyy年 M月 d日 h時 m分');
   late OnePiece onePiece;
-  //Color selectedColor = Colors.grey;
+  late Color selectedColor;
 
   @override
   void initState() {
@@ -43,10 +43,11 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
 
   @override
   Widget build(BuildContext context) {
+    int nowId = widget.thisPiece.oneId;
     int nowRed = widget.thisPiece.oneRed;
     int nowGreen = widget.thisPiece.oneGreen;
     int nowBlue = widget.thisPiece.oneBlue;
-    DateTime createdTime = widget.thisPiece.oneTime;
+    var createdTime = widget.thisPiece.oneTime;
     String? nowStory = widget.thisPiece.oneStory;
     nowStory = nowStory ?? '';
     Color selectedColor = Color.fromRGBO(nowRed, nowGreen, nowBlue, 1);
@@ -269,7 +270,7 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
                 hoverColor: selectedColor,
                 onPressed: () async {
                   onePiece = OnePiece(
-                    widget.thisPiece.oneId,
+                    nowId,
                     selectedColor.red,
                     selectedColor.green,
                     selectedColor.blue,
