@@ -55,7 +55,6 @@ class _LaughTailViewState extends State<LaughTailView>
     super.initState();
     initDb();
     scrollController = ScrollController();
-    afterFirstLayout(context);
   }
 
   @override
