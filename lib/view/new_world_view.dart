@@ -208,6 +208,9 @@ class _NewPieceViewState extends State<NewPieceView> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
                 child: GestureDetector(
+                  onDoubleTap: () {
+                    FocusScope.of(context).unfocus();
+                  },
                   child: TextFormField(
                     controller: storyController,
                     style: const TextStyle(

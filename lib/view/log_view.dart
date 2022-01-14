@@ -28,60 +28,69 @@ class _RGBPieState extends State<RGBPie> {
       'Blue': widget.countB,
     };
     return Scaffold(
-      appBar: AppBar(
-        foregroundColor: Colors.black,
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        leading: GestureDetector(
-          onTap: () =>
-              Nav.navigate(context, const LaughTailView(), const Offset(1, 0)),
-          child: const Padding(
-            padding: EdgeInsets.only(left: 15.0),
-            child: Icon(Icons.arrow_back_ios_outlined),
-          ),
-        ),
-      ),
       body: Center(
-        child: PieChart(
-          dataMap: rgbMap,
-          animationDuration: const Duration(milliseconds: 800),
-          chartLegendSpacing: 70,
-          chartRadius: MediaQuery.of(context).size.width / 1.5,
-          colorList: const [
-            Colors.redAccent,
-            Colors.greenAccent,
-            Colors.blueAccent
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            PieChart(
+              dataMap: rgbMap,
+              animationDuration: const Duration(milliseconds: 800),
+              chartLegendSpacing: 70,
+              chartRadius: MediaQuery.of(context).size.width / 1.5,
+              colorList: const [
+                Colors.redAccent,
+                Colors.greenAccent,
+                Colors.blueAccent
+              ],
+              initialAngleInDegree: -90,
+              chartType: ChartType.disc,
+              ringStrokeWidth: 32,
+              centerText: "RGB",
+              centerTextStyle: const TextStyle(
+                color: Colors.white,
+                backgroundColor: Colors.black26,
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+              legendOptions: const LegendOptions(
+                showLegendsInRow: false,
+                legendPosition: LegendPosition.bottom,
+                showLegends: true,
+                legendShape: BoxShape.circle,
+                legendTextStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              chartValuesOptions: const ChartValuesOptions(
+                chartValueStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+                showChartValueBackground: false,
+                showChartValues: true,
+                showChartValuesInPercentage: true,
+                showChartValuesOutside: false,
+              ),
+            ),
+            const SizedBox(height: 40),
+            GestureDetector(
+              onTap: () {
+                Nav.navigate(
+                  context,
+                  const LaughTailView(),
+                  const Offset(1, 0),
+                );
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Icon(
+                  Icons.arrow_forward,
+                  size: 55,
+                ),
+              ),
+            )
           ],
-          initialAngleInDegree: -90,
-          chartType: ChartType.disc,
-          ringStrokeWidth: 32,
-          centerText: "RGB",
-          centerTextStyle: const TextStyle(
-            color: Colors.white,
-            backgroundColor: Colors.black26,
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-          ),
-          legendOptions: const LegendOptions(
-            showLegendsInRow: false,
-            legendPosition: LegendPosition.bottom,
-            showLegends: true,
-            legendShape: BoxShape.circle,
-            legendTextStyle: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          chartValuesOptions: const ChartValuesOptions(
-            chartValueStyle: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
-            showChartValueBackground: false,
-            showChartValues: true,
-            showChartValuesInPercentage: true,
-            showChartValuesOutside: false,
-          ),
         ),
       ),
     );

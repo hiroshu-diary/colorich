@@ -45,7 +45,9 @@ class _LaughTailViewState extends State<LaughTailView>
 
   @override
   void afterFirstLayout(BuildContext context) {
-    scl.scrollToBottom(scrollController, scl.startDur, scl.startCur);
+    if (timeLine.isNotEmpty) {
+      scl.scrollToBottom(scrollController, scl.startDur, scl.startCur);
+    }
   }
 
   @override
@@ -53,6 +55,7 @@ class _LaughTailViewState extends State<LaughTailView>
     super.initState();
     initDb();
     scrollController = ScrollController();
+    afterFirstLayout(context);
   }
 
   @override

@@ -255,7 +255,7 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: SimpleShadow(
         opacity: 0.4,
         color: Colors.black,
