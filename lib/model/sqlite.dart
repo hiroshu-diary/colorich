@@ -30,16 +30,28 @@ class DbProvider {
 
   //CREATE
   static Future<int> create(OnePiece onePiece) async {
-    await database!.insert(tableName, {
-      'oneRed': onePiece.oneRed,
-      'oneGreen': onePiece.oneGreen,
-      'oneBlue': onePiece.oneBlue,
-      'oneTime': onePiece.oneTime.toString(),
-      'oneStory': onePiece.oneStory,
+    database!.transaction((txn) async {
+      var batch = txn.batch();
+      batch.insert(tableName, {
+        'oneRed': onePiece.oneRed,
+        'oneGreen': onePiece.oneGreen,
+        'oneBlue': onePiece.oneBlue,
+        'oneTime': onePiece.oneTime.toString(),
+        'oneStory': onePiece.oneStory,
+      });
+      await batch.commit();
     });
+
     final List<Map<String, dynamic>> maps = await database!.query(tableName);
     return maps.last['oneId'];
   }
+  // await database!.insert(tableName, {
+  //   'oneRed': onePiece.oneRed,
+  //   'oneGreen': onePiece.oneGreen,
+  //   'oneBlue': onePiece.oneBlue,
+  //   'oneTime': onePiece.oneTime.toString(),
+  //   'oneStory': onePiece.oneStory,
+  // });
 
   //READ
   static Future<List<OnePiece>> read() async {
