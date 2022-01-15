@@ -1,4 +1,3 @@
-//編集画面
 import 'package:colorich/dice/d_view.dart';
 import 'package:colorich/model/one_piece.dart';
 import 'package:colorich/model/sqlite.dart';

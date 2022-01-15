@@ -74,7 +74,7 @@ class DbProvider {
       },
       //被りがないののはidだから使用
       where: 'oneId = ?',
-      whereArgs: [onePiece.oneTime],
+      whereArgs: [onePiece.oneId],
       //alarm.idとidが一致した時に上記のようにアップデートする
     );
   }
