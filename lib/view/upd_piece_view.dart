@@ -34,12 +34,12 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
   @override
   void initState() {
     colorController = TextEditingController();
-    storyController = TextEditingController();
     int nowRed = widget.thisPiece.oneRed;
     int nowGreen = widget.thisPiece.oneGreen;
     int nowBlue = widget.thisPiece.oneBlue;
     selectedColor = Color.fromRGBO(nowRed, nowGreen, nowBlue, 1);
     nowStory = widget.thisPiece.oneStory;
+    storyController = TextEditingController(text: nowStory);
     super.initState();
   }
 
@@ -55,8 +55,6 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
     int nowId = widget.thisPiece.oneId;
 
     DateTime createdTime = widget.thisPiece.oneTime;
-
-    storyController = TextEditingController(text: nowStory);
 
     return Scaffold(
       appBar: AppBar(
