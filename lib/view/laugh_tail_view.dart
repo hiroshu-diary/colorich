@@ -45,9 +45,7 @@ class _LaughTailViewState extends State<LaughTailView>
 
   @override
   void afterFirstLayout(BuildContext context) {
-    if (timeLine.isNotEmpty) {
-      scl.scrollToBottom(scrollController, scl.startDur, scl.startCur);
-    }
+    scl.scrollToBottom(scrollController, scl.startDur, scl.startCur);
   }
 
   @override

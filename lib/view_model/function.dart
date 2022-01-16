@@ -48,7 +48,7 @@ class Scl {
   final newCur = Curves.easeInOutBack;
 
   void scrollToBottom(scrollController, duration, curve) {
-    final bottomOffset = scrollController.position.maxScrollExtent;
+    var bottomOffset = scrollController.position.maxScrollExtent;
     scrollController.animateTo(
       bottomOffset,
       duration: duration,
@@ -82,7 +82,6 @@ class Scl {
   }
 }
 
-//SettingsViewのメソッド
 class SetHelper {
   final mailAddress = 'hiroshu.diary@mail.com';
   final urlApp = Platform.isIOS
@@ -169,5 +168,3 @@ class SetHelper {
     _launchURL(urlApp);
   }
 }
-
-class OneHelper {}
