@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:after_layout/after_layout.dart';
 import 'package:colorich/dice/d_model.dart';
 import 'package:colorich/model/one_piece.dart';
@@ -189,8 +187,6 @@ class _LaughTailViewState extends State<LaughTailView>
                                     ),
                                   ),
                                 ),
-                                //左右コネクト
-                                //todo Puzzuleの謎の影。
                                 Positioned(
                                   left: 0,
                                   top: (deviceWidth - sidePadding * 2) / 6 -
