@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:after_layout/after_layout.dart';
 import 'package:colorich/dice/d_model.dart';
 import 'package:colorich/model/one_piece.dart';
@@ -47,12 +49,14 @@ class _LaughTailViewState extends State<LaughTailView>
   void afterFirstLayout(BuildContext context) {}
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
     initDb();
     scrollController = ScrollController();
-    await Future.delayed(const Duration(milliseconds: 500));
-    scl.scrollToBottom(scrollController, scl.startDur, scl.startCur);
+    // if (Platform.isIOS) {
+    //   await Future.delayed(const Duration(milliseconds: 500));
+    //   scl.scrollToBottom(scrollController, scl.startDur, scl.startCur);
+    // }
   }
 
   @override
