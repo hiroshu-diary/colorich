@@ -19,8 +19,7 @@ class LaughTailView extends StatefulWidget {
   State<LaughTailView> createState() => _LaughTailViewState();
 }
 
-class _LaughTailViewState extends State<LaughTailView>
-    with AfterLayoutMixin<LaughTailView> {
+class _LaughTailViewState extends State<LaughTailView> {
   final scl = Scl();
   final Color rrr = const Color(0xffff99ff);
   final Color ggg = const Color.fromRGBO(255, 100, 255, 1);
@@ -41,10 +40,7 @@ class _LaughTailViewState extends State<LaughTailView>
   Future<void> reBuild() async {
     timeLine = await DbProvider.read();
     setState(() {});
-  }
-
-  @override
-  void afterFirstLayout(BuildContext context) {
+    await Future.delayed(const Duration(milliseconds: 1));
     scl.scrollToBottom(scrollController, scl.startDur, scl.startCur);
   }
 
