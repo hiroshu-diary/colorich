@@ -22,7 +22,7 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
   final double cardSideLength = window.physicalSize.width * 0.20;
   var colorController = TextEditingController();
   var storyController = TextEditingController(text: '');
-  final DateFormat outputFormat = DateFormat('yyyy年 M月 d日 h時 m分');
+  final DateFormat outputFormat = DateFormat('yyyy年 M月 d日 hh時 m分');
   late OnePiece onePiece;
 
   late int nowRed;

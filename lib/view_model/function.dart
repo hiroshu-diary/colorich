@@ -86,8 +86,7 @@ class SetHelper {
   final mailAddress = 'hiroshu.diary@mail.com';
   final urlApp = Platform.isIOS
       ? 'https://apps.apple.com/us/developer/hiroshi-tsunezumi/id1577885245'
-      //todo GooglePlayのURL↓
-      : '';
+      : 'https://play.google.com/store/apps/details?id=com.hiroshu.colorich';
 
   //URLを後で変える
   void dumpNotify() {
