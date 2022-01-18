@@ -1,23 +1,23 @@
-#ColoRich  
-##心を満たす色日記の、カラリッチです。  　
+# ColoRich  
+## 心を満たす色日記の、カラリッチです。  　
    
-####App Store  → https://apps.apple.com/jp/app/id1605445070  
-####Google Play→ https://play.google.com/store/apps/details?id=com.hiroshu.colorich  
+#### App Store  → https://apps.apple.com/jp/app/id1605445070  
+#### Google Play→ https://play.google.com/store/apps/details?id=com.hiroshu.colorich  
   
   
-###ファイル
-####dice  
+### ファイル
+#### dice  
 d_model　→10進法・16進法の変換用ファイル  
 d_view_z →色選択時の、３つ目のランダムカラーピッカー  
   
-#####model  
+##### model  
 one_piece →日記保存用のクラス  
 sqliteファイル　→DB  
  
-####view_model  
+#### view_model  
 function →汎用するfunctionのまとめ  
    
-####view  
+#### view  
 laugh_tail_view →ホーム画面  
 log_view →ホーム画面のFABを長押しで出る、RGBの累計円グラフ  
 new_world_view →ホーム画面のFABを押して出る、新規作成画面  
