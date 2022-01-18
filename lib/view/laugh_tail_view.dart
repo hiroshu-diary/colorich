@@ -52,10 +52,8 @@ class _LaughTailViewState extends State<LaughTailView>
     super.initState();
     initDb();
     scrollController = ScrollController();
-    if (Platform.isIOS) {
-      await Future.delayed(const Duration(milliseconds: 500));
-      scl.scrollToBottom(scrollController, scl.startDur, scl.startCur);
-    }
+    await Future.delayed(const Duration(milliseconds: 500));
+    scl.scrollToBottom(scrollController, scl.startDur, scl.startCur);
   }
 
   @override
