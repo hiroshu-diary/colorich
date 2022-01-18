@@ -85,7 +85,7 @@ class Scl {
 class SetHelper {
   final mailAddress = 'hiroshu.diary@mail.com';
   final urlApp = Platform.isIOS
-      ? 'https://apps.apple.com/us/developer/hiroshi-tsunezumi/id1577885245'
+      ? 'https://apps.apple.com/jp/app/id1605445070'
       : 'https://play.google.com/store/apps/details?id=com.hiroshu.colorich';
 
   //URLを後で変える
