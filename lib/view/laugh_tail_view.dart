@@ -36,7 +36,7 @@ class _LaughTailViewState extends State<LaughTailView>
     await DbProvider.setDb();
     timeLine = await DbProvider.read();
     setState(() {});
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(seconds: 1));
     scl.scrollToBottom(scrollController, scl.startDur, scl.startCur);
   }
 
