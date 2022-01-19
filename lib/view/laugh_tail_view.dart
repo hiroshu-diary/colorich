@@ -11,7 +11,6 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 import 'new_world_view.dart';
 import 'package:animations/animations.dart' as ani;
-import 'dart:io';
 
 class LaughTailView extends StatefulWidget {
   const LaughTailView({Key? key}) : super(key: key);
@@ -36,9 +35,9 @@ class _LaughTailViewState extends State<LaughTailView>
   Future<void> initDb() async {
     await DbProvider.setDb();
     timeLine = await DbProvider.read();
+    setState(() {});
     await Future.delayed(const Duration(milliseconds: 500));
     scl.scrollToBottom(scrollController, scl.startDur, scl.startCur);
-    setState(() {});
   }
 
   Future<void> reBuild() async {
