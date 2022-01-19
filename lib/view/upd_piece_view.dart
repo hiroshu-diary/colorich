@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 import 'dart:ui';
 
@@ -20,16 +21,20 @@ class UpdatePieceView extends StatefulWidget {
 
 class _UpdatePieceViewState extends State<UpdatePieceView> {
   final double cardSideLength = window.physicalSize.width * 0.20;
-  var colorController = TextEditingController();
-  var storyController = TextEditingController(text: '');
-  final DateFormat outputFormat = DateFormat('yyyy年 M月 d日 hh時 m分');
-  late OnePiece onePiece;
+  String outputFormat(DateTime time) {
+    initializeDateFormatting('ja');
+    return DateFormat.yMEd('ja').add_Hm().format(time);
+  }
+  // final DateFormat outputFormat = DateFormat('y/ M/d H:m');
 
+  late TextEditingController colorController;
+  late TextEditingController storyController;
+  late OnePiece onePiece;
   late int nowRed;
   late int nowGreen;
   late int nowBlue;
   late Color selectedColor;
-  String? nowStory;
+  late String? nowStory;
 
   @override
   void initState() {
@@ -63,8 +68,8 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
         foregroundColor: Colors.black,
         elevation: 0.0,
         title: Text(
-          outputFormat.format(createdTime),
-          style: const TextStyle(fontSize: 15),
+          outputFormat(createdTime),
+          style: const TextStyle(fontSize: 17),
         ),
         actions: [
           Padding(

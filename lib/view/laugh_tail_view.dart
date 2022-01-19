@@ -36,6 +36,8 @@ class _LaughTailViewState extends State<LaughTailView>
   Future<void> initDb() async {
     await DbProvider.setDb();
     timeLine = await DbProvider.read();
+    await Future.delayed(const Duration(milliseconds: 500));
+    scl.scrollToBottom(scrollController, scl.startDur, scl.startCur);
     setState(() {});
   }
 
@@ -48,12 +50,10 @@ class _LaughTailViewState extends State<LaughTailView>
   void afterFirstLayout(BuildContext context) {}
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    initDb();
     scrollController = ScrollController();
-    await Future.delayed(const Duration(milliseconds: 500));
-    scl.scrollToBottom(scrollController, scl.startDur, scl.startCur);
+    initDb();
   }
 
   @override
