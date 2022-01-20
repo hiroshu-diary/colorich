@@ -84,7 +84,7 @@ class _LaughTailViewState extends State<LaughTailView>
             child: GestureDetector(
               child: const Icon(Icons.settings, size: 33, color: Colors.black),
               onTap: () {
-                Nav.navigate(context, const SettingsView(), const Offset(1, 0));
+                Nav.navigate(context, const SettingsView(), const Offset(0, 0));
               },
             ),
           )

@@ -68,7 +68,7 @@ class _SettingsViewState extends State<SettingsView> {
                   Nav.navigate(
                     context,
                     const LaughTailView(),
-                    const Offset(-1, 0),
+                    const Offset(0, 0),
                   );
                 },
                 child: const Icon(Icons.arrow_back_ios),
