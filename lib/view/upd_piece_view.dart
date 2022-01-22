@@ -13,7 +13,10 @@ import 'dart:ui';
 class UpdatePieceView extends StatefulWidget {
   final OnePiece thisPiece;
 
-  const UpdatePieceView({Key? key, required this.thisPiece}) : super(key: key);
+  const UpdatePieceView({
+    Key? key,
+    required this.thisPiece,
+  }) : super(key: key);
 
   @override
   _UpdatePieceViewState createState() => _UpdatePieceViewState();
@@ -25,7 +28,6 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
     initializeDateFormatting('ja');
     return DateFormat.yMEd('ja').add_Hm().format(time);
   }
-  // final DateFormat outputFormat = DateFormat('y/ M/d H:m');
 
   late TextEditingController colorController;
   late TextEditingController storyController;
@@ -114,6 +116,9 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
+        onHorizontalDragUpdate: (detail) {
+          Navigator.pop(context);
+        },
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
