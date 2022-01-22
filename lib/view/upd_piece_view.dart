@@ -114,6 +114,7 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
           )
         ],
       ),
+      //todo スワイプが反応しすぎる→適切な場所へ移動したい
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         onHorizontalDragUpdate: (detail) {
