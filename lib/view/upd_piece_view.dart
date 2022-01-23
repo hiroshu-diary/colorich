@@ -3,6 +3,7 @@ import 'package:colorich/model/one_piece.dart';
 import 'package:colorich/model/sqlite.dart';
 import 'package:colorich/view/settings_view.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:intl/intl.dart';
@@ -117,130 +118,135 @@ class _UpdatePieceViewState extends State<UpdatePieceView> {
       //todo スワイプが反応しすぎる→適切な場所へ移動したい
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        onHorizontalDragUpdate: (detail) {
-          Navigator.pop(context);
+        onHorizontalDragUpdate: (DragUpdateDetails details) {
+          var startX = details.globalPosition;
+          var endX = details.localPosition;
+          if (details.delta.distance > 20.0 &&
+              !details.primaryDelta!.isNegative) {
+            Navigator.pop(context);
+          }
         },
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 20, bottom: 20),
-                child: GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        var currentIndex = 0;
-                        return AlertDialog(
-                          titlePadding: const EdgeInsets.all(0),
-                          contentPadding: const EdgeInsets.all(5.0),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                          content: SizedBox(
-                            height: 420,
-                            child: CupertinoTabScaffold(
-                              tabBuilder: (context, currentIndex) {
-                                if (currentIndex == 0) {
-                                  return ColorPicker(
-                                    pickerColor: selectedColor,
-                                    hexInputController: colorController,
-                                    onColorChanged: (value) {
-                                      setState(
-                                        () => selectedColor = value,
-                                      );
-                                    },
-                                    colorPickerWidth: 300,
-                                    pickerAreaHeightPercent: 0.65,
-                                    enableAlpha: false,
-                                    labelTypes: const [
-                                      ColorLabelType.rgb,
-                                      ColorLabelType.hsv,
-                                      ColorLabelType.hsl,
-                                    ],
-                                    displayThumbColor: true,
-                                    paletteType: PaletteType.hueWheel,
-                                    pickerAreaBorderRadius:
-                                        const BorderRadius.only(
-                                      topLeft: Radius.circular(2),
-                                      topRight: Radius.circular(2),
-                                    ),
-                                    hexInputBar: true,
-                                  );
-                                } else if (currentIndex == 1) {
-                                  return SlidePicker(
-                                    pickerColor: selectedColor,
-                                    onColorChanged: (Color value) {
-                                      setState(() {
-                                        selectedColor = value;
-                                      });
-                                    },
-                                    colorModel: ColorModel.rgb,
-                                    sliderSize: const Size(350, 50),
-                                    sliderTextStyle: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    enableAlpha: false,
-                                    displayThumbColor: true,
-                                    showParams: true,
-                                    indicatorBorderRadius:
-                                        const BorderRadius.all(
-                                      Radius.circular(3),
-                                    ),
-                                  );
-                                } else {
-                                  return ColoDice(
-                                    selectedColor: selectedColor,
-                                    onColorChanged: (Color value) {
-                                      setState(() {
-                                        selectedColor = value;
-                                      });
-                                    },
-                                  );
-                                }
-                              },
-                              tabBar: CupertinoTabBar(
-                                currentIndex: currentIndex,
-                                items: const [
-                                  BottomNavigationBarItem(
-                                    icon: Icon(Icons.colorize),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      var currentIndex = 0;
+                      return AlertDialog(
+                        titlePadding: const EdgeInsets.all(0),
+                        contentPadding: const EdgeInsets.all(5.0),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        content: SizedBox(
+                          height: 420,
+                          child: CupertinoTabScaffold(
+                            tabBuilder: (context, currentIndex) {
+                              if (currentIndex == 0) {
+                                return ColorPicker(
+                                  pickerColor: selectedColor,
+                                  hexInputController: colorController,
+                                  onColorChanged: (value) {
+                                    setState(
+                                      () => selectedColor = value,
+                                    );
+                                  },
+                                  colorPickerWidth: 300,
+                                  pickerAreaHeightPercent: 0.65,
+                                  enableAlpha: false,
+                                  labelTypes: const [
+                                    ColorLabelType.rgb,
+                                    ColorLabelType.hsv,
+                                    ColorLabelType.hsl,
+                                  ],
+                                  displayThumbColor: true,
+                                  paletteType: PaletteType.hueWheel,
+                                  pickerAreaBorderRadius:
+                                      const BorderRadius.only(
+                                    topLeft: Radius.circular(2),
+                                    topRight: Radius.circular(2),
                                   ),
-                                  BottomNavigationBarItem(
-                                    icon: Icon(
-                                      CupertinoIcons.slider_horizontal_3,
-                                    ),
+                                  hexInputBar: true,
+                                );
+                              } else if (currentIndex == 1) {
+                                return SlidePicker(
+                                  pickerColor: selectedColor,
+                                  onColorChanged: (Color value) {
+                                    setState(() {
+                                      selectedColor = value;
+                                    });
+                                  },
+                                  colorModel: ColorModel.rgb,
+                                  sliderSize: const Size(350, 50),
+                                  sliderTextStyle: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                  BottomNavigationBarItem(
-                                    icon: Icon(CupertinoIcons.shuffle),
+                                  enableAlpha: false,
+                                  displayThumbColor: true,
+                                  showParams: true,
+                                  indicatorBorderRadius: const BorderRadius.all(
+                                    Radius.circular(3),
                                   ),
-                                ],
-                              ),
+                                );
+                              } else {
+                                return ColoDice(
+                                  selectedColor: selectedColor,
+                                  onColorChanged: (Color value) {
+                                    setState(() {
+                                      selectedColor = value;
+                                    });
+                                  },
+                                );
+                              }
+                            },
+                            tabBar: CupertinoTabBar(
+                              currentIndex: currentIndex,
+                              items: const [
+                                BottomNavigationBarItem(
+                                  icon: Icon(Icons.colorize),
+                                ),
+                                BottomNavigationBarItem(
+                                  icon: Icon(
+                                    CupertinoIcons.slider_horizontal_3,
+                                  ),
+                                ),
+                                BottomNavigationBarItem(
+                                  icon: Icon(CupertinoIcons.shuffle),
+                                ),
+                              ],
                             ),
                           ),
-                        );
-                      },
-                    );
-                  },
-                  child: SimpleShadow(
-                    child: SizedBox(
-                      child: styleValue == false
-                          ? Card(color: selectedColor)
-                          : Image.asset('images/puzzule.jpg',
-                              color: selectedColor),
-                      width: cardSideLength,
-                      height: cardSideLength,
-                    ),
-                    opacity: 0.4,
-                    color: Colors.black87,
-                    offset: const Offset(4, 4),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: SimpleShadow(
+                  child: SizedBox(
+                    child: styleValue == false
+                        ? Card(color: selectedColor)
+                        : Image.asset('images/puzzule.jpg',
+                            color: selectedColor),
+                    width: cardSideLength,
+                    height: cardSideLength,
                   ),
+                  opacity: 0.4,
+                  color: Colors.black87,
+                  offset: const Offset(4, 4),
                 ),
               ),
+              const SizedBox(height: 20),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 25,
+                ),
                 child: GestureDetector(
                   onDoubleTap: () => FocusScope.of(context).unfocus(),
                   child: TextFormField(
