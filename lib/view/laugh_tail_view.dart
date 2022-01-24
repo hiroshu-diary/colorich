@@ -169,6 +169,9 @@ class _LaughTailViewState extends State<LaughTailView>
                     },
                     closedBuilder: (context, openContainer) {
                       reBuild();
+                      const Radius cornerR = Radius.circular(21.0);
+                      const Radius nCornerR = Radius.circular(0.0);
+
                       return styleValue == false
                           ? Card(color: oneColor(index), elevation: 9.0)
                           : Stack(
@@ -180,7 +183,28 @@ class _LaughTailViewState extends State<LaughTailView>
                                   child: Container(
                                     margin: const EdgeInsets.all(0.0),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(21.0),
+                                      // borderRadius: BorderRadius.circular(21.0),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft:
+                                            index == 0 ? cornerR : nCornerR,
+                                        topRight:
+                                            index == 2 ? cornerR : nCornerR,
+                                        bottomLeft: index % 3 == 0 &&
+                                                    index ==
+                                                        timeLine.length - 3 ||
+                                                index % 3 == 0 &&
+                                                    index ==
+                                                        timeLine.length - 2 ||
+                                                index % 3 == 0 &&
+                                                    index == timeLine.length - 1
+                                            ? cornerR
+                                            : nCornerR,
+                                        bottomRight:
+                                            index == timeLine.length - 1 &&
+                                                    index % 3 == 2
+                                                ? cornerR
+                                                : nCornerR,
+                                      ),
                                       color: oneColor(index),
                                     ),
                                   ),
