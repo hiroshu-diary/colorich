@@ -173,7 +173,7 @@ class _SettingsViewState extends State<SettingsView> {
                   //   title: 'Message',
                   //   titleTextStyle: const TextStyle(fontSize: 18),
                   //   leading: const Icon(Icons.mail_outline_outlined, size: 30),
-                  // ),
+                  // ),ｘ
                   SettingsTile(
                     onPressed: (BuildContext context) {
                       setHelper.launchAppStore();

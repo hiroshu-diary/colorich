@@ -1,4 +1,4 @@
-package com.example.colorich
+package com.hiroshu.colorich
 
 import io.flutter.embedding.android.FlutterActivity
 
